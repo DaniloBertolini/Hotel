@@ -33,7 +33,23 @@ namespace TrybeHotel.Repository
         // 3. Desenvolva o endpoint POST /city
         public CityDto AddCity(City city)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Cities.Add(city);
+                _context.SaveChanges();
+                var newCity = _context.Cities.Last();
+                var response = new CityDto()
+                {
+                    cityId = newCity.CityId,
+                    name = newCity.Name
+                };
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         }
 
     }
