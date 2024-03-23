@@ -50,10 +50,12 @@ namespace TrybeHotel.Repository
             {
                 Hotel hotelExists = _context.Hotels.Find(room.HotelId) ?? throw new Exception("Hotel not Found");
 
+
                 _context.Rooms.Add(room);
                 _context.SaveChanges();
 
-                var newRoom = _context.Rooms.First(e => e.HotelId == room.HotelId);
+                var newRoom = _context.Rooms.First(e => e.RoomId == room.RoomId);
+                var city = _context.Cities.First(e => e.CityId == hotelExists.CityId);
                 var response = new RoomDto()
                 {
                     roomId = newRoom.RoomId,
@@ -65,8 +67,8 @@ namespace TrybeHotel.Repository
                         hotelId = hotelExists.HotelId,
                         name = hotelExists.Name,
                         address = hotelExists.Address,
-                        // cityName = newRoom.Hotel
-                        // cityId = hotelExists.HotelId,
+                        cityName = city.Name,
+                        cityId = city.CityId,
                     }
                 };
 
