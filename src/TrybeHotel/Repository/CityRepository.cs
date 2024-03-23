@@ -37,7 +37,7 @@ namespace TrybeHotel.Repository
             {
                 _context.Cities.Add(city);
                 _context.SaveChanges();
-                var newCity = _context.Cities.Last();
+                var newCity = _context.Cities.First(e => e.CityId == city.CityId);
                 var response = new CityDto()
                 {
                     cityId = newCity.CityId,

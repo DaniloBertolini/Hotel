@@ -38,15 +38,12 @@ namespace TrybeHotel.Repository
         {
             try
             {
-                var cityExists = _context.Cities.Find(hotel.CityId);
-                if (cityExists == null)
-                {
-                    throw new Exception("City not Found");
-                }
+                var cityExists = _context.Cities.Find(hotel.CityId) ?? throw new Exception("City not Found");
+
                 _context.Hotels.Add(hotel);
                 _context.SaveChanges();
 
-                var newHotel = _context.Hotels.Last();
+                var newHotel = _context.Hotels.First(e => e.HotelId == hotel.HotelId);
                 var response = new HotelDto()
                 {
                     hotelId = newHotel.HotelId,
